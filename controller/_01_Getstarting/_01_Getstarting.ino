@@ -22,7 +22,7 @@ void SendData(float h,float t,String w);     //Define Senddata Voide
 
 const char* ssid     = "iot";            //Set ssid
 const char* password = "12345678";                    //Set Password
-const char* Server   = "139.59.99.17";           //set Server Domain or Server ip
+const char* Server   = "188.166.223.204";           //set Server Domain or Server ip
 ESP8266WiFiMulti WiFiMulti;
 DHT dht(DHTPIN, DHTTYPE);                             //Start DHT
 
@@ -118,7 +118,7 @@ void SendData(float h,float t,String w)
     if((WiFiMulti.run() == WL_CONNECTED)) 
     {
         HTTPClient http;
-        String str = "http://" +String(Server)+":5001" +"/data/" + String(t)+"/"+String(h)+"/"+w;
+        String str = "http://" +String(Server)+":5005" +"/data/" + String(t)+"/"+String(h)+"/"+w;
         Serial.println(str);
         http.begin(str);
         int httpCode = http.GET();
@@ -136,8 +136,6 @@ void SendData(float h,float t,String w)
                 Serial.println(payload.substring(4,7));
                 Serial.println (payload.substring(8));
                 
-                if( payload.substring(8)=="M")
-                {
                   Serial.println("Manual");
                    if(payload.substring(0,3)=="101")
                    {
@@ -162,12 +160,7 @@ void SendData(float h,float t,String w)
                       //OffValve;
                       digitalWrite(Valve,LOW);
                       Serial.println("OffValve");
-                    }
-                }
-                else
-                {
-                  //go_auto(w);
-                }      
+                    }    
               }
               
               
